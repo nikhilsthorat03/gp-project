@@ -11,6 +11,8 @@ phases:
     commands:
       - echo "Zipping Lambda function..."
       - zip -r function.zip . -x "*.git/*"
+      - echo "Verifying function.zip contents..."
+      - unzip -l function.zip
   post_build:
     commands:
       - echo "Build phase completed."
