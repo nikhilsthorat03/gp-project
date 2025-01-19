@@ -5,5 +5,5 @@ Resources:
       Properties:
         Name: etl-lambda
         Alias: live
-        CurrentVersion: 3
-        TargetVersion: 4
+        CurrentVersion: <current_version>
+        TargetVersion: <new_version>

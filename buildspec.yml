@@ -4,15 +4,32 @@ phases:
   install:
     runtime-versions:
       python: 3.9
+  pre_build:
     commands:
-      - pip install --upgrade pip
-      - pip install -r requirements.txt -t .
+      - echo "Fetching current version of Lambda alias..."
+      - export CURRENT_VERSION=$(aws lambda list-aliases --function-name etl-lambda --query 'Aliases[?Name==`live`].FunctionVersion' --output text)
   build:
     commands:
-      - zip -r function.zip . -x "*.git/*"
-
+      - echo "Publishing new Lambda version..."
+      - export NEW_VERSION=$(aws lambda publish-version --function-name etl-lambda --query 'Version' --output text)
+      - echo "Current version is $CURRENT_VERSION"
+      - echo "New version is $NEW_VERSION"
+  post_build:
+    commands:
+      - echo "Creating AppSpec file..."
+      - |
+        cat <<EOF > appspec.yml
+        version: 0.0
+        Resources:
+          - myLambdaFunction:
+              Type: AWS::Lambda::Function
+              Properties:
+                Name: etl-lambda
+                Alias: live
+                CurrentVersion: $CURRENT_VERSION
+                TargetVersion: $NEW_VERSION
+        EOF
 artifacts:
   files:
     - appspec.yml
     - function.zip
-    - template.yaml
