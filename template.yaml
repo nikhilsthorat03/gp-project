@@ -2,7 +2,7 @@ Resources:
   ETLLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: etl-lambda
+      FunctionName: test
       Handler: app.lambda_handler
       Runtime: python3.9
       Role: arn:aws:iam::891612579745:role/etl-lambda-role-3eza6xnd
