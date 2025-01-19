@@ -7,12 +7,3 @@ Resources:
         Alias: live
         CurrentVersion: 1
         TargetVersion: 2
-Hooks:
-  BeforeAllowTraffic:
-    - location: scripts/validate.sh
-      timeout: 300
-      runas: root
-  AfterAllowTraffic:
-    - location: scripts/cleanup.sh
-      timeout: 300
-      runas: root
