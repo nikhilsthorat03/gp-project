@@ -1,9 +1,0 @@
-version: 0.0
-Resources:
-  - myLambdaFunction:
-      Type: AWS::Lambda::Function
-      Properties:
-        Name: etl-lambda
-        Alias: live
-        CurrentVersion: <current_version>
-        TargetVersion: <new_version>
