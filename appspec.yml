@@ -6,4 +6,4 @@ Resources:
         Name: etl-lambda
         Alias: live
         CurrentVersion: 6
-        TargetVersion: 6
+        TargetVersion: 7
