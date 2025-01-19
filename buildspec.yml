@@ -1,22 +1,20 @@
 version: 0.2
-
 phases:
   install:
     runtime-versions:
       python: 3.9
     commands:
-      - pip install --upgrade pip
-      - pip install -r requirements.txt -t .
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt -t lib
   build:
     commands:
-      - echo "Zipping Lambda function..."
-      - zip -r function.zip . -x "*.git/*"
-      - echo "Verifying function.zip contents..."
-      - unzip -l function.zip
+      - echo "Zipping deployment package..."
+      - cd lib
+      - zip -r9 ../deployment_package.zip .
+      - cd ..
+      - zip -g deployment_package.zip lambda_function.py
   post_build:
     commands:
-      - echo "Build phase completed."
-artifacts:
-  files:
-    - appspec.yml
-    - function.zip
+      - echo "Updating lambda Function..."
+      - aws lambda update-function-code --function-name test --zip-file fileb://deployment_package.zip
+      - echo "DONE!!"
