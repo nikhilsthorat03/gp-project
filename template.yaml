@@ -1,4 +1,3 @@
-AWSTemplateFormatVersion: '2010-09-09'
 Resources:
   ETLLambdaFunction:
     Type: AWS::Lambda::Function
@@ -11,3 +10,9 @@ Resources:
         S3Bucket: !Sub "${CodePipelineArtifactBucket}"
         S3Key: !Sub "${CodePipelineArtifactObjectKey}"
       Timeout: 10
+  LiveAlias:
+    Type: AWS::Lambda::Alias
+    Properties:
+      FunctionName: !Ref ETLLambdaFunction
+      FunctionVersion: !GetAtt ETLLambdaFunction.Version
+      Name: live
