@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  ETLLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: etl-lambda
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Role: arn:aws:iam::891612579745:role/etl-lambda-role-3eza6xnd
+      Code:
+        S3Bucket: !Sub "${CodePipelineArtifactBucket}"
+        S3Key: !Sub "${CodePipelineArtifactObjectKey}"
+      Timeout: 10
