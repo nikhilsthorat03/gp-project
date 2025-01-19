@@ -4,4 +4,6 @@ Resources:
       Type: AWS::Lambda::Function
       Properties:
         Name: etl-lambda
-
+        Alias: live
+        CurrentVersion: 3
+        TargetVersion: 4
