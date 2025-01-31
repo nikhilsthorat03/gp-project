@@ -114,4 +114,4 @@ def lambda_handler(event, context):
 
     current_timestamp = datetime.now()
     # print(f"Masked file saved to s3://{'processed-data-gp'}/{masked_object_key}")
-    print(f"Data Masking Lambda completed -- successfully {current_timestamp}")
+    print(f"Data Masking Lambda completed --- successfully {current_timestamp}")
