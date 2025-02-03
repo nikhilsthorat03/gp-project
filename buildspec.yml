@@ -1,20 +1,22 @@
-version: 0.2
+version: 0.2 # Define the buildspec version
 phases:
   install:
     runtime-versions:
-      python: 3.9
+      python: 3.9 # Specify the Python version for the build environment
     commands:
       - echo "Installing dependencies..."
-      - pip install -r requirements.txt -t lib
+      - pip install -r requirements.txt -t lib # Install required dependencies in the 'lib' directory
   build:
     commands:
       - echo "Zipping deployment package..."
-      - cd lib
-      - zip -r9 ../deployment_package.zip .
+      - cd lib # Navigate to the directory where dependencies are installed
+      - zip -r9 ../deployment_package.zip . # Create a zip file containing dependencies
       - cd ..
-      - zip -g deployment_package.zip lambda_function.py
+      - zip -g deployment_package.zip lambda_function.py # Add the Lambda function code to the zip file
   post_build:
     commands:
       - echo "Updating lambda Function..."
+      # Deploy the updated Lambda function package to AWS
       - aws lambda update-function-code --function-name test --zip-file fileb://deployment_package.zip
+      # Print completion message
       - echo "DONE!!"
