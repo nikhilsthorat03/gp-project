@@ -1,13 +1,9 @@
-version: 0.0  # Define the version of the AppSpec file
+version: 0.0
 Resources:
   - myLambdaFunction:
-      Type: AWS::Lambda::Function  # Specifies that the deployment is for an AWS Lambda function
+      Type: AWS::Lambda::Function
       Properties:
-        # Replace with the actual Lambda function name
-        Name: YOUR_LAMBDA_FUNCTION_NAME
-        # Specify the Lambda alias to be used
+        Name: test
         Alias: live
-        # Current version of the Lambda function (before deployment)
         CurrentVersion: 1
-        # Target version of the Lambda function (after deployment)
         TargetVersion: 2
