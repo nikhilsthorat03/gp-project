@@ -1,18 +1,28 @@
 Resources:
+  # Define an AWS Lambda function
   ETLLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: test
+      # Specify the name of the Lambda function (replace with actual name)
+      FunctionName: YOUR_LAMBDA_FUNCTION_NAME
+      # Define the handler file and function
       Handler: lambda_function.lambda_handler
+      # Specify the runtime environment for the Lambda function
       Runtime: python3.9
-      Role: arn:aws:iam::891612579745:role/etl-lambda-role-3eza6xnd
+      # Define the source code location in an S3 bucket (CodePipeline artifacts)
       Code:
-        S3Bucket: !Sub "${CodePipelineArtifactBucket}"
-        S3Key: !Sub "${CodePipelineArtifactObjectKey}"
+        S3Bucket: !Sub "${CodePipelineArtifactBucket}"  # S3 bucket containing the deployment package
+        S3Key: !Sub "${CodePipelineArtifactObjectKey}"  # Object key for the Lambda deployment package
+      # Define the maximum execution time in seconds
       Timeout: 10
+
+  # Create an alias for the Lambda function to manage deployments
   LiveAlias:
     Type: AWS::Lambda::Alias
     Properties:
+      # Reference the Lambda function created above
       FunctionName: !Ref ETLLambdaFunction
+      # Set the function version to the latest deployed version
       FunctionVersion: !GetAtt ETLLambdaFunction.Version
+      # Define alias name as 'live'
       Name: live
